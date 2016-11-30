@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ShortestPathAppTest.Models;
+using QuickShopper.Models;
 
-namespace ShortestPathAppTest.Data
+namespace QuickShopper.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -22,5 +18,9 @@ namespace ShortestPathAppTest.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        public DbSet<Item> Item { get; set; }
+
+        public DbSet<ShoppingList> ShoppingList { get; set; }
     }
 }

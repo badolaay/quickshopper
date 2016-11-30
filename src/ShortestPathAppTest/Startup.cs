@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using ShortestPathAppTest.Data;
-using ShortestPathAppTest.Models;
-using ShortestPathAppTest.Services;
+using QuickShopper.Data;
+using QuickShopper.Models;
+using QuickShopper.Services;
 
-namespace ShortestPathAppTest
+namespace QuickShopper
 {
     public class Startup
     {

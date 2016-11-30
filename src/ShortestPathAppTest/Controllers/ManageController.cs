@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ShortestPathAppTest.Models;
-using ShortestPathAppTest.Models.ManageViewModels;
-using ShortestPathAppTest.Services;
+using QuickShopper.Models;
+using QuickShopper.Models.ManageViewModels;
+using QuickShopper.Services;
 
-namespace ShortestPathAppTest.Controllers
+namespace QuickShopper.Controllers
 {
     [Authorize]
     public class ManageController : Controller

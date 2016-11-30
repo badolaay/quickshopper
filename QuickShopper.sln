@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ShortestPathAppTest", "src\ShortestPathAppTest\ShortestPathAppTest.xproj", "{2AA94E99-D8A8-4AC6-B00D-E292A821781A}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "QuickShopper", "src\ShortestPathAppTest\QuickShopper.xproj", "{2AA94E99-D8A8-4AC6-B00D-E292A821781A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ShortestPathAppTest.Models.ManageViewModels
+﻿namespace QuickShopper.Models.ManageViewModels
 {
     public class FactorViewModel
     {

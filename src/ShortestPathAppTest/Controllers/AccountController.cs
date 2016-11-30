@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -8,11 +6,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using ShortestPathAppTest.Models;
-using ShortestPathAppTest.Models.AccountViewModels;
-using ShortestPathAppTest.Services;
+using QuickShopper.Models;
+using QuickShopper.Models.AccountViewModels;
+using QuickShopper.Services;
 
-namespace ShortestPathAppTest.Controllers
+namespace QuickShopper.Controllers
 {
     [Authorize]
     public class AccountController : Controller
