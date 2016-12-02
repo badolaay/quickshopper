@@ -15,45 +15,67 @@ namespace QuickShopper.Models
             using (var context = new ApplicationDbContext(
                 serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
             {
-                // Look for any movies.
-                if (context.Item.Any())
+                using (var transaction = context.Database.BeginTransaction())
                 {
-                    return;   // DB has been seeded
+                    //delete every item at startup
+                    if (context.Item.Any())
+                    {
+                        foreach (Item item in context.Item)
+                        {
+                            context.Remove(item);
+                        }
+                    }
+                    context.SaveChanges();
+                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Item] ON");
+                    context.Item.AddRange(
+                        new Item
+                        {
+                            Id = 1,
+                            Name = "Apples",
+                            Price = 7.99D,
+                            Discount = 10.00D,
+                            Category = "Groceries",
+                            ImagePath = ""
+
+                        },
+                        new Item
+                        {
+                            Id = 2,
+                            Name = "Oranges",
+                            Price = 9.99D,
+                            Discount = 5.00D,
+                            Category = "Groceries",
+                            ImagePath = ""
+                        }, new Item
+                        {
+                            Id = 3,
+                            Name = "Tomatoes",
+                            Price = 7.99D,
+                            Discount = 10.00D,
+                            Category = "Groceries",
+                            ImagePath = ""
+                        }, new Item
+                        {
+                            Id = 4,
+                            Name = "Carrots",
+                            Price = 8.99D,
+                            Discount = 10.00D,
+                            Category = "Groceries",
+                            ImagePath = ""
+                        }, new Item
+                        {
+                            Id = 5,
+                            Name = "Onions",
+                            Price = 2.99D,
+                            Discount = 0.00D,
+                            Category = "Groceries",
+                            ImagePath = ""
+                        }
+                    );
+                    context.SaveChanges();
+                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Item] OFF");
+                    transaction.Commit();
                 }
-
-                context.Item.AddRange(
-                     new Item
-                     {
-                         Name = "Apples",
-                         Price = 7.99D,
-                         Discount = 10.00D,
-                         Category = "Groceries",
-
-                     },
-                     new Item
-                     {
-                         Name = "Oranges",
-                         Price = 9.99D,
-                         Discount = 5.00D,
-                         Category = "Groceries",
-
-                     }, new Item
-                     {
-                         Name = "Tomatoes",
-                         Price = 7.99D,
-                         Discount = 10.00D,
-                         Category = "Groceries",
-
-                     }, new Item
-                     {
-                         Name = "Carrots",
-                         Price = 8.99D,
-                         Discount = 10.00D,
-                         Category = "Groceries",
-
-                     }
-                );
-                context.SaveChanges();
             }
         }
     }
