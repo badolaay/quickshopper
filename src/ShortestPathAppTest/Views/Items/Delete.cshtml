@@ -1,4 +1,3 @@
-@using QuickShopper.Models
 @model QuickShopper.Models.Item
 
 @{
@@ -23,6 +22,12 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Discount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ImagePath)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Name)

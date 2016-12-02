@@ -3,12 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using QuickShopper.Data;
 
-namespace QuickShopper.Data.Migrations
+namespace ShortestPathAppTest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161130014643_Initial")]
-    partial class Initial
+    [Migration("20161202200653_Item")]
+    partial class Item
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -123,7 +124,7 @@ namespace QuickShopper.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ShortestPathAppTest.Models.ApplicationUser", b =>
+            modelBuilder.Entity("QuickShopper.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id");
 
@@ -172,7 +173,7 @@ namespace QuickShopper.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("ShortestPathAppTest.Models.Item", b =>
+            modelBuilder.Entity("QuickShopper.Models.Item", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -181,29 +182,15 @@ namespace QuickShopper.Data.Migrations
 
                     b.Property<double>("Discount");
 
+                    b.Property<string>("ImagePath");
+
                     b.Property<string>("Name");
 
                     b.Property<double>("Price");
 
-                    b.Property<long?>("ShoppingListId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ShoppingListId");
 
                     b.ToTable("Item");
-                });
-
-            modelBuilder.Entity("ShortestPathAppTest.Models.ShoppingList", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<long>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ShoppingList");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
@@ -216,7 +203,7 @@ namespace QuickShopper.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("ShortestPathAppTest.Models.ApplicationUser")
+                    b.HasOne("QuickShopper.Models.ApplicationUser")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -224,7 +211,7 @@ namespace QuickShopper.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("ShortestPathAppTest.Models.ApplicationUser")
+                    b.HasOne("QuickShopper.Models.ApplicationUser")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -237,17 +224,10 @@ namespace QuickShopper.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ShortestPathAppTest.Models.ApplicationUser")
+                    b.HasOne("QuickShopper.Models.ApplicationUser")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("ShortestPathAppTest.Models.Item", b =>
-                {
-                    b.HasOne("ShortestPathAppTest.Models.ShoppingList")
-                        .WithMany("Items")
-                        .HasForeignKey("ShoppingListId");
                 });
         }
     }
