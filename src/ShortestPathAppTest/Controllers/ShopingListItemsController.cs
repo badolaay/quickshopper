@@ -1,22 +1,30 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using QuickShopper.Data;
 using QuickShopper.Models;
+using QuickShopper.TSP;
+using Item = ShortestPathAppTest.Migrations.Item;
 
 namespace QuickShopper.Controllers
 {
+    [Authorize]
     public class ShopingListItemsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
         public ShopingListItemsController(ApplicationDbContext context)
         {
-            _context = context;    
+            _context = context;
         }
 
         // GET: ShopingListItems
@@ -151,6 +159,36 @@ namespace QuickShopper.Controllers
         private bool ShopingListItemsExists(long id)
         {
             return _context.ShopingListItems.Any(e => e.Id == id);
+        }
+
+        // GET: Optimized path
+        public async Task<IActionResult> Path()
+        {
+            var queryResult =
+                _context.ShopingListItems.Where(list => list.UserId == User.Identity.Name).Select(list => list.ItemId);
+            int[] itemIds = new int[queryResult.Count() + 1];
+            itemIds[0] = 0;//the store entry point
+            int i = 1;
+            foreach (var l in queryResult)
+            {
+                itemIds[i] = (int)l;
+                i++;
+            }
+            ItemsForPath itemsForPath = new ItemsForPath();
+            itemsForPath.ItemIds = itemIds;
+            using (var client = new HttpClient())
+            {
+                //client.DefaultRequestHeaders.Accept.Clear();
+                //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                string body = JsonConvert.SerializeObject(itemsForPath);
+                var content = new StringContent(body, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage responseMessage = await client.PostAsync("http://localhost:51120/api/test/path", content);
+                string response = await responseMessage.Content.ReadAsStringAsync();
+                List<Point> points = JsonConvert.DeserializeObject<List<Point>>(response);
+            }
+            //return View(await applicationDbContext.ToListAsync());
+            return (IActionResult)JsonConvert.DeserializeObject((string)ViewData["ResponseFromApi"]);
         }
     }
 }
