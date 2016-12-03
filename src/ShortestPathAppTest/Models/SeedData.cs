@@ -106,19 +106,7 @@ namespace QuickShopper.Models
                             Discount = 0.00D,
                             Category = "Toys",
                             ImagePath = "T2.jpg"
-                        },
-                        new Item
-                        {
-                            Id = 10,
-                            Name = "Lays",
-                            Price = 0.99D,
-                            Discount = 0.00D,
-                            Category = "Groceries",
-                            ImagePath = "G2.jpg"
                         }
-                       
-
-
                     );
                     context.SaveChanges();
                     context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Item] OFF");
