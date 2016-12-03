@@ -19,5 +19,6 @@ namespace QuickShopper.Data
             // Add your customizations after calling base.OnModelCreating(builder);
         }
         public DbSet<Item> Item { get; set; }
+        public DbSet<ShopingListItems> ShopingListItems { get; set; }
     }
 }

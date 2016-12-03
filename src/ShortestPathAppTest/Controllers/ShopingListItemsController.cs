@@ -10,22 +10,23 @@ using QuickShopper.Models;
 
 namespace QuickShopper.Controllers
 {
-    public class ItemsController : Controller
+    public class ShopingListItemsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ItemsController(ApplicationDbContext context)
+        public ShopingListItemsController(ApplicationDbContext context)
         {
-            _context = context;
+            _context = context;    
         }
 
-        // GET: Items
+        // GET: ShopingListItems
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Item.ToListAsync());
+            var applicationDbContext = _context.ShopingListItems.Include(s => s.Item);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Items/Details/5
+        // GET: ShopingListItems/Details/5
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -33,38 +34,40 @@ namespace QuickShopper.Controllers
                 return NotFound();
             }
 
-            var item = await _context.Item.SingleOrDefaultAsync(m => m.Id == id);
-            if (item == null)
+            var shopingListItems = await _context.ShopingListItems.SingleOrDefaultAsync(m => m.Id == id);
+            if (shopingListItems == null)
             {
                 return NotFound();
             }
 
-            return View(item);
+            return View(shopingListItems);
         }
 
-        // GET: Items/Create
+        // GET: ShopingListItems/Create
         public IActionResult Create()
         {
+            ViewData["ItemId"] = new SelectList(_context.Item, "Id", "Id");
             return View();
         }
 
-        // POST: Items/Create
+        // POST: ShopingListItems/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Category,Discount,ImagePath,Name,Price")] Item item)
+        public async Task<IActionResult> Create([Bind("Id,DateCreated,ItemId,Quantity,UserId")] ShopingListItems shopingListItems)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(item);
+                _context.Add(shopingListItems);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(item);
+            ViewData["ItemId"] = new SelectList(_context.Item, "Id", "Id", shopingListItems.ItemId);
+            return View(shopingListItems);
         }
 
-        // GET: Items/Edit/5
+        // GET: ShopingListItems/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -72,22 +75,23 @@ namespace QuickShopper.Controllers
                 return NotFound();
             }
 
-            var item = await _context.Item.SingleOrDefaultAsync(m => m.Id == id);
-            if (item == null)
+            var shopingListItems = await _context.ShopingListItems.SingleOrDefaultAsync(m => m.Id == id);
+            if (shopingListItems == null)
             {
                 return NotFound();
             }
-            return View(item);
+            ViewData["ItemId"] = new SelectList(_context.Item, "Id", "Id", shopingListItems.ItemId);
+            return View(shopingListItems);
         }
 
-        // POST: Items/Edit/5
+        // POST: ShopingListItems/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Category,Discount,ImagePath,Name,Price")] Item item)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,DateCreated,ItemId,Quantity,UserId")] ShopingListItems shopingListItems)
         {
-            if (id != item.Id)
+            if (id != shopingListItems.Id)
             {
                 return NotFound();
             }
@@ -96,12 +100,12 @@ namespace QuickShopper.Controllers
             {
                 try
                 {
-                    _context.Update(item);
+                    _context.Update(shopingListItems);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemExists(item.Id))
+                    if (!ShopingListItemsExists(shopingListItems.Id))
                     {
                         return NotFound();
                     }
@@ -112,10 +116,11 @@ namespace QuickShopper.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            return View(item);
+            ViewData["ItemId"] = new SelectList(_context.Item, "Id", "Id", shopingListItems.ItemId);
+            return View(shopingListItems);
         }
 
-        // GET: Items/Delete/5
+        // GET: ShopingListItems/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -123,38 +128,29 @@ namespace QuickShopper.Controllers
                 return NotFound();
             }
 
-            var item = await _context.Item.SingleOrDefaultAsync(m => m.Id == id);
-            if (item == null)
+            var shopingListItems = await _context.ShopingListItems.SingleOrDefaultAsync(m => m.Id == id);
+            if (shopingListItems == null)
             {
                 return NotFound();
             }
 
-            return View(item);
+            return View(shopingListItems);
         }
 
-        // POST: Items/Delete/5
+        // POST: ShopingListItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var item = await _context.Item.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Item.Remove(item);
+            var shopingListItems = await _context.ShopingListItems.SingleOrDefaultAsync(m => m.Id == id);
+            _context.ShopingListItems.Remove(shopingListItems);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
-        private bool ItemExists(long id)
+        private bool ShopingListItemsExists(long id)
         {
-            return _context.Item.Any(e => e.Id == id);
+            return _context.ShopingListItems.Any(e => e.Id == id);
         }
-
-
-        public IActionResult AddToShoppingList(long id)
-        {
-            ShopingListItems items = new ShopingListItems(_context);
-            items.AddToList(id, User.Identity.Name);
-            return RedirectToAction("Index");
-        }
-
     }
 }

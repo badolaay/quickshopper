@@ -76,7 +76,7 @@
                             <p>Price- $ @item.Price </p>
                             <p>Discount- @item.Discount% </p>
                             <p>
-                                <a href="#" class="btn btn-primary" role="button">Add To cart</a> >
+                                <a asp-action="AddToShoppingList" asp-route-id="@item.Id" class="btn btn-primary" role="button">Add To cart</a> >
                             </p>
                         </div>
                     </div>
