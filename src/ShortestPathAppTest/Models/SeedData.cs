@@ -115,61 +115,9 @@ namespace QuickShopper.Models
                             Discount = 0.00D,
                             Category = "Groceries",
                             ImagePath = "G2.jpg"
-                        },
-                        new Item
-                        {
-                            Id = 11,
-                            Name = "Fantastic Beasts",
-                            Price = 1.99D,
-                            Discount = 0.00D,
-                            Category = "Books",
-                            ImagePath = "B1.jpg"
-                        },
-                        new Item
-                        {
-                            Id = 12,
-                            Name = "Diary Of a Wimpy Kid",
-                            Price = 1.99D,
-                            Discount = 0.00D,
-                            Category = "Books",
-                            ImagePath = "B2.jpg"
-                        },
-                        new Item
-                        {
-                            Id = 13,
-                            Name = "Killing the Rising sun",
-                            Price = 1.99D,
-                            Discount = 0.00D,
-                            Category = "Books",
-                            ImagePath = "B3.jpg"
-                        },
-                        new Item
-                        {
-                            Id = 14,
-                            Name = "The Wistler",
-                            Price = 1.99D,
-                            Discount = 0.00D,
-                            Category = "Books",
-                            ImagePath = "B6.jpg"
-                        },
-                        new Item
-                        {
-                            Id = 15,
-                            Name = "Blue Navy Shirt",
-                            Price = 2.99D,
-                            Discount = 0.00D,
-                            Category = "Clothes For Men",
-                            ImagePath = "MC1.jpg"
-                        },
-                          new Item
-                          {
-                              Id = 16,
-                              Name = "Milk",
-                              Price = 2.99D,
-                              Discount = 0.00D,
-                              Category = "Diary Product",
-                              ImagePath = "Milk.jpg"
-                          }
+                        }
+                       
+
 
                     );
                     context.SaveChanges();
