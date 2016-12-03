@@ -5,6 +5,11 @@
 }
 
 <h2>Choose Items</h2>
+<button class="btn btn-primary btn-lg" type="button">
+    Shopping Cart <span class="badge">4</span>
+</button>
+<br />
+<br />
 @{
     var admin = User.Identity.Name != null && User.Identity.Name.Equals("admin@quickshopper.com");
 
@@ -68,9 +73,9 @@
         <div class="row">
             @foreach (var item in Model)
             {
-                <div class="col-md-3">
-                    <div class="thumbnail">
-                        <img src="..." alt="...">
+                <div class="col-md-2">
+                    <div class="thumbnail"style="max-width:400px;max-height:300px">
+                        <img src="~/images/catalog/@item.ImagePath" alt="Photo">
                         <div class="caption">
                             <h3>@item.Name</h3>
                             <p>Price- $ @item.Price </p>

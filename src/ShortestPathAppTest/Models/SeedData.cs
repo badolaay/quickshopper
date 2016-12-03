@@ -35,7 +35,7 @@ namespace QuickShopper.Models
                             Price = 7.99D,
                             Discount = 10.00D,
                             Category = "Groceries",
-                            ImagePath = ""
+                            ImagePath = "Apples.jpg"
 
                         },
                         new Item
@@ -45,7 +45,7 @@ namespace QuickShopper.Models
                             Price = 9.99D,
                             Discount = 5.00D,
                             Category = "Groceries",
-                            ImagePath = ""
+                            ImagePath = "Oranges.jpg"
                         }, new Item
                         {
                             Id = 3,
@@ -53,24 +53,124 @@ namespace QuickShopper.Models
                             Price = 7.99D,
                             Discount = 10.00D,
                             Category = "Groceries",
-                            ImagePath = ""
+                            ImagePath = "Tomatos.jpg"
                         }, new Item
                         {
                             Id = 4,
-                            Name = "Carrots",
+                            Name = "Eggs",
                             Price = 8.99D,
                             Discount = 10.00D,
-                            Category = "Groceries",
-                            ImagePath = ""
+                            Category = "Dairy Product",
+                            ImagePath = "Eggs.jpg"
                         }, new Item
                         {
                             Id = 5,
-                            Name = "Onions",
+                            Name = "Yoghurt",
                             Price = 2.99D,
                             Discount = 0.00D,
+                            Category = "Dairy Product",
+                            ImagePath = "Yoghurt.jpg"
+                        },
+                        new Item
+                        {
+                            Id = 6,
+                            Name = "HotWeels",
+                            Price = 6.99D,
+                            Discount = 0.00D,
+                            Category = "Toys",
+                            ImagePath = "T5.jpg"
+                        },
+                        new Item
+                        {
+                            Id = 7,
+                            Name = "Puppy Dog",
+                            Price = 4.99D,
+                            Discount = 0.00D,
+                            Category = "Toys",
+                            ImagePath = "T6.jpg"
+                        },
+                        new Item
+                        {
+                            Id = 8,
+                            Name = "QuadCopter",
+                            Price = 7.99D,
+                            Discount = 0.00D,
+                            Category = "Toys",
+                            ImagePath = "T4.jpg"
+                        },
+                        new Item
+                        {
+                            Id = 9,
+                            Name = "Mini Robot",
+                            Price = 3.99D,
+                            Discount = 0.00D,
+                            Category = "Toys",
+                            ImagePath = "T2.jpg"
+                        },
+                        new Item
+                        {
+                            Id = 10,
+                            Name = "Lays",
+                            Price = 0.99D,
+                            Discount = 0.00D,
                             Category = "Groceries",
-                            ImagePath = ""
-                        }
+                            ImagePath = "G2.jpg"
+                        },
+                        new Item
+                        {
+                            Id = 11,
+                            Name = "Fantastic Beasts",
+                            Price = 1.99D,
+                            Discount = 0.00D,
+                            Category = "Books",
+                            ImagePath = "B1.jpg"
+                        },
+                        new Item
+                        {
+                            Id = 12,
+                            Name = "Diary Of a Wimpy Kid",
+                            Price = 1.99D,
+                            Discount = 0.00D,
+                            Category = "Books",
+                            ImagePath = "B2.jpg"
+                        },
+                        new Item
+                        {
+                            Id = 13,
+                            Name = "Killing the Rising sun",
+                            Price = 1.99D,
+                            Discount = 0.00D,
+                            Category = "Books",
+                            ImagePath = "B3.jpg"
+                        },
+                        new Item
+                        {
+                            Id = 14,
+                            Name = "The Wistler",
+                            Price = 1.99D,
+                            Discount = 0.00D,
+                            Category = "Books",
+                            ImagePath = "B6.jpg"
+                        },
+                        new Item
+                        {
+                            Id = 15,
+                            Name = "Blue Navy Shirt",
+                            Price = 2.99D,
+                            Discount = 0.00D,
+                            Category = "Clothes For Men",
+                            ImagePath = "MC1.jpg"
+                        },
+                          new Item
+                          {
+                              Id = 16,
+                              Name = "Milk",
+                              Price = 2.99D,
+                              Discount = 0.00D,
+                              Category = "Diary Product",
+                              ImagePath = "Milk.jpg"
+                          }
+
                     );
                     context.SaveChanges();
                     context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Item] OFF");
