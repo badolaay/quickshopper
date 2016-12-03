@@ -1,92 +1,94 @@
 @model IEnumerable<QuickShopper.Models.Item>
 
-@{
+    @{
     ViewData["Title"] = "Index";
-}
+    }
 
-<h2>Choose Items</h2>
-<button class="btn btn-primary btn-lg" type="button">
-    Shopping Cart <span class="badge">4</span>
-</button>
-<br />
-<br />
-@{
+    <h2>Choose Items</h2>
+    <button class="btn btn-primary btn-lg" type="button">
+        Shopping Cart <span class="badge">4</span>
+    </button>
+    <br />
+    <br />
+    @{
     var admin = User.Identity.Name != null && User.Identity.Name.Equals("admin@quickshopper.com");
 
     if (admin)
     {
-        <p> 
-            <a asp-action="Create">Create New</a>
-        </p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Category)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Discount)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ImagePath)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Price)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Category)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Discount)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ImagePath)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Price)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Discount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ImagePath)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Discount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImagePath)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
     }
     else
     {
-        <div class="row">
-            @foreach (var item in Model)
-            {
-                <div class="col-md-2">
-                    <div class="thumbnail"style="max-width:400px;max-height:300px">
-                        <img src="~/images/catalog/@item.ImagePath" alt="Photo">
-                        <div class="caption">
-                            <h3>@item.Name</h3>
-                            <p>Price- $ @item.Price </p>
-                            <p>Discount- @item.Discount% </p>
-                            <p>
-                                <a asp-action="AddToShoppingList" asp-route-id="@item.Id" class="btn btn-primary" role="button">Add To cart</a> >
-                            </p>
-                        </div>
-                    </div>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+        <div class="col-md-2">
+            <div class="thumbnail" style="max-width:400px;max-height:300px">
+                <img src="~/images/catalog/@item.ImagePath" alt="Photo">
+                <div class="caption">
+                    <h3>@item.Name</h3>
+                    <p>Price- $ @item.Price </p>
+                    <p>Discount- @item.Discount% </p>
+                    <p>
+                        <a asp-action="AddToShoppingList" asp-route-id="@item.Id" class="btn btn-primary" role="button">Add To cart</a> >
+                    </p>
                 </div>
-            }
+            </div>
         </div>
+        }
+    </div>
     }
-}
+    }
+
+    <a asp-controller="ShopingListItems" asp-action="Index">Got to shoppinglist</a>
