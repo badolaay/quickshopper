@@ -13,7 +13,6 @@ using Newtonsoft.Json;
 using QuickShopper.Data;
 using QuickShopper.Models;
 using QuickShopper.TSP;
-using Item = ShortestPathAppTest.Migrations.Item;
 
 namespace QuickShopper.Controllers
 {
@@ -164,18 +163,33 @@ namespace QuickShopper.Controllers
         // GET: Optimized path
         public async Task<IActionResult> Path()
         {
-            var queryResult =
-                _context.ShopingListItems.Where(list => list.UserId == User.Identity.Name).Select(list => list.ItemId);
-            int[] itemIds = new int[queryResult.Count() + 1];
+            var queryResultItems = _context.ShopingListItems.Where(list => list.UserId == User.Identity.Name).Select(list => list.Item);
+
+            IDictionary<long, Item> itemIdMapping = new Dictionary<long, Item>(queryResultItems.Count());
+
+            int[] itemIds = new int[queryResultItems.Count() + 1];
             itemIds[0] = 0;//the store entry point
             int i = 1;
-            foreach (var l in queryResult)
+            foreach (Item item in queryResultItems)
             {
-                itemIds[i] = (int)l;
+
+                itemIds[i] = (int)item.Id;
                 i++;
+                itemIdMapping.Add(item.Id, item);
             }
-            ItemsForPath itemsForPath = new ItemsForPath();
-            itemsForPath.ItemIds = itemIds;
+            IList<Item> items = new List<Item>(queryResultItems.Count());
+            //var queryResult =
+            //    _context.ShopingListItems.Where(list => list.UserId == User.Identity.Name).Select(list => list.ItemId);
+            //int[] itemIds = new int[queryResult.Count() + 1];
+            //itemIds[0] = 0;//the store entry point
+            //int i = 1;
+            //foreach (var l in queryResult)
+            //{
+            //    itemIds[i] = (int)l;
+            //    i++;
+            //}
+            ItemsForPath itemsForPath = new ItemsForPath { ItemIds = itemIds };
+
             using (var client = new HttpClient())
             {
                 //client.DefaultRequestHeaders.Accept.Clear();
@@ -186,9 +200,17 @@ namespace QuickShopper.Controllers
                 HttpResponseMessage responseMessage = await client.PostAsync("http://localhost:51120/api/test/path", content);
                 string response = await responseMessage.Content.ReadAsStringAsync();
                 List<Point> points = JsonConvert.DeserializeObject<List<Point>>(response);
+
+                foreach (Point point in points)
+                {
+                    if (!point.Id.Equals(0))
+                    {
+                        items.Add(itemIdMapping[point.Id]);
+                    }
+                }
             }
-            //return View(await applicationDbContext.ToListAsync());
-            return (IActionResult)JsonConvert.DeserializeObject((string)ViewData["ResponseFromApi"]);
+
+            return View(items);
         }
     }
 }
