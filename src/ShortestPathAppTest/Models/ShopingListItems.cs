@@ -52,6 +52,17 @@ namespace QuickShopper.Models
             }
             _context.SaveChanges();
         }
+
+        public long GetQuantity(string userid)
+        {
+            long quantity = 0;
+            var queryable = _context.ShopingListItems.Where(c => c.UserId == userid).Select(c => c.Quantity);
+            foreach (long l in queryable)
+            {
+                quantity = l;
+            }
+            return quantity;
+        }
     }
 }
 

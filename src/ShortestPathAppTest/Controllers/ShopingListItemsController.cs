@@ -201,13 +201,26 @@ namespace QuickShopper.Controllers
                 string response = await responseMessage.Content.ReadAsStringAsync();
                 List<Point> points = JsonConvert.DeserializeObject<List<Point>>(response);
 
-                foreach (Point point in points)
+                Point startPoint = points.First();
+                Point currentPoint = startPoint.OutgoingConnection.To;
+                items.Add(itemIdMapping[currentPoint.Id]);
+                float cost = startPoint.OutgoingConnection.Cost;
+                float lastCost = 0;
+                while (currentPoint != startPoint && currentPoint.OutgoingConnection.To != null)
+                {
+                    cost += currentPoint.OutgoingConnection.Cost;
+                    lastCost = currentPoint.OutgoingConnection.Cost;
+                    currentPoint = currentPoint.OutgoingConnection.To;
+                    items.Add(itemIdMapping[currentPoint.Id]);
+                }
+                ViewData["PathCost"] = cost - lastCost;
+                /*foreach (Point point in points)
                 {
                     if (!point.Id.Equals(0))
                     {
                         items.Add(itemIdMapping[point.Id]);
                     }
-                }
+                }*/
             }
 
             return View(items);
