@@ -24,6 +24,8 @@ namespace QuickShopper.Controllers
         // GET: Items
         public async Task<IActionResult> Index()
         {
+            ShopingListItems shopingListItems = new ShopingListItems(_context);
+            ViewData["ShoppingListQuantity"] = shopingListItems.GetQuantity(User.Identity.Name);
             return View(await _context.Item.ToListAsync());
         }
 
