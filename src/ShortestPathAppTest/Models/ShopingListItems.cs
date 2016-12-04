@@ -59,7 +59,7 @@ namespace QuickShopper.Models
             var queryable = _context.ShopingListItems.Where(c => c.UserId == userid).Select(c => c.Quantity);
             foreach (long l in queryable)
             {
-                quantity = l;
+                quantity += l;
             }
             return quantity;
         }

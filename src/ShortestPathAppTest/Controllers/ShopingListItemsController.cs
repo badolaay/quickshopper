@@ -178,22 +178,10 @@ namespace QuickShopper.Controllers
                 itemIdMapping.Add(item.Id, item);
             }
             IList<Item> items = new List<Item>(queryResultItems.Count());
-            //var queryResult =
-            //    _context.ShopingListItems.Where(list => list.UserId == User.Identity.Name).Select(list => list.ItemId);
-            //int[] itemIds = new int[queryResult.Count() + 1];
-            //itemIds[0] = 0;//the store entry point
-            //int i = 1;
-            //foreach (var l in queryResult)
-            //{
-            //    itemIds[i] = (int)l;
-            //    i++;
-            //}
             ItemsForPath itemsForPath = new ItemsForPath { ItemIds = itemIds };
 
             using (var client = new HttpClient())
             {
-                //client.DefaultRequestHeaders.Accept.Clear();
-                //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 string body = JsonConvert.SerializeObject(itemsForPath);
                 var content = new StringContent(body, Encoding.UTF8, "application/json");
 
@@ -214,13 +202,6 @@ namespace QuickShopper.Controllers
                     items.Add(itemIdMapping[currentPoint.Id]);
                 }
                 ViewData["PathCost"] = cost - lastCost;
-                /*foreach (Point point in points)
-                {
-                    if (!point.Id.Equals(0))
-                    {
-                        items.Add(itemIdMapping[point.Id]);
-                    }
-                }*/
             }
 
             return View(items);
