@@ -7,45 +7,47 @@
 
 <h2>Optimal Path</h2>
 <h3>Cost of path is @cost</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Item Name
-                </th>
-                <th>
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Price)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Discount)
-                </th>
-                <th>
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Item Name
+            </th>
+            <th>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Discount)
+            </th>
+            <th>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        <img src="~/images/catalog/@item.ImagePath" alt="Photo">
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Price)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Discount)
-                    </td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <a asp-controller="ShopingListItems" asp-action="Index">Go back to shopping list</a>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <img src="~/images/catalog/@item.ImagePath" alt="Photo">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Discount)
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-controller="ShopingListItems" asp-action="Index" class="btn btn-primary btn-lg" role="button">
+    <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Go back to shopping list
+</a>

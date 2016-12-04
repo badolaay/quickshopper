@@ -178,32 +178,35 @@ namespace QuickShopper.Controllers
                 itemIdMapping.Add(item.Id, item);
             }
             IList<Item> items = new List<Item>(queryResultItems.Count());
-            ItemsForPath itemsForPath = new ItemsForPath { ItemIds = itemIds };
-
-            using (var client = new HttpClient())
+            ViewData["PathCost"] = 0;
+            if (queryResultItems.Any())
             {
-                string body = JsonConvert.SerializeObject(itemsForPath);
-                var content = new StringContent(body, Encoding.UTF8, "application/json");
+                ItemsForPath itemsForPath = new ItemsForPath { ItemIds = itemIds };
 
-                HttpResponseMessage responseMessage = await client.PostAsync("http://localhost:51120/api/test/path", content);
-                string response = await responseMessage.Content.ReadAsStringAsync();
-                List<Point> points = JsonConvert.DeserializeObject<List<Point>>(response);
-
-                Point startPoint = points.First();
-                Point currentPoint = startPoint.OutgoingConnection.To;
-                items.Add(itemIdMapping[currentPoint.Id]);
-                float cost = startPoint.OutgoingConnection.Cost;
-                float lastCost = 0;
-                while (currentPoint != startPoint && currentPoint.OutgoingConnection.To != null)
+                using (var client = new HttpClient())
                 {
-                    cost += currentPoint.OutgoingConnection.Cost;
-                    lastCost = currentPoint.OutgoingConnection.Cost;
-                    currentPoint = currentPoint.OutgoingConnection.To;
-                    items.Add(itemIdMapping[currentPoint.Id]);
-                }
-                ViewData["PathCost"] = cost - lastCost;
-            }
+                    string body = JsonConvert.SerializeObject(itemsForPath);
+                    var content = new StringContent(body, Encoding.UTF8, "application/json");
 
+                    HttpResponseMessage responseMessage = await client.PostAsync("http://localhost:51120/api/test/path", content);
+                    string response = await responseMessage.Content.ReadAsStringAsync();
+                    List<Point> points = JsonConvert.DeserializeObject<List<Point>>(response);
+
+                    Point startPoint = points.First();
+                    Point currentPoint = startPoint.OutgoingConnection.To;
+                    items.Add(itemIdMapping[currentPoint.Id]);
+                    float cost = startPoint.OutgoingConnection.Cost;
+                    float lastCost = 0;
+                    while (currentPoint != startPoint && currentPoint.OutgoingConnection.To != null)
+                    {
+                        cost += currentPoint.OutgoingConnection.Cost;
+                        lastCost = currentPoint.OutgoingConnection.Cost;
+                        currentPoint = currentPoint.OutgoingConnection.To;
+                        items.Add(itemIdMapping[currentPoint.Id]);
+                    }
+                    ViewData["PathCost"] = cost - lastCost;
+                }
+            }
             return View(items);
         }
     }
