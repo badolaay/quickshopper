@@ -4,8 +4,8 @@
     @{
     ViewData["Title"] = "Index";
     }
-
     <h2>Choose Items</h2>
+    <h5 style="color:darkgray">Choose the list of items that you want to add to your shopping list</h5>
     @{
     var o = ViewData["ShoppingListQuantity"];
     }
@@ -96,5 +96,7 @@
     </div>
     }
     }
-
-    <a asp-controller="ShopingListItems" asp-action="Index">Go to shopping list</a>
+    <a asp-controller="ShopingListItems" asp-action="Index" class="btn btn-primary btn-lg" role="button">
+        Go to shopping list
+        <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+    </a>
